@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "WebAlert",
+  "version": "0.0",
+
+  "description": "Allows you to track data on websites and get one unified newsletter",
+
+  "content_scripts": [{
+    "matches": ["*://*/*"],
+    "js": ["src/main.js"]
+  }]
+}
