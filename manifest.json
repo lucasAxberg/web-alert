@@ -1,12 +1,17 @@
 {
-  "manifest_version": 3,
+  "manifest_version": 2,
   "name": "WebAlert",
   "version": "0.0",
 
   "description": "Allows you to track data on websites and get one unified newsletter",
 
-  "content_scripts": [{
-    "matches": ["*://*/*"],
-    "js": ["src/main.js"]
-  }]
+  "icons": {
+    "48": "icons/Logo_48.png"
+  },
+
+  "browser_action": {
+    "default_icon": "icons/Logo_32.png",
+    "default_title": "WebAlert",
+    "default_popup": "src/popup/index.html"
+  }
 }
