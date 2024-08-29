@@ -1,10 +1,31 @@
 html,
 body {
-	width: 600px;
-	height: 400px;
-	overflow: hidden;
+  width: 575px;
+  height: 300px;
+  overflow: hidden;
+  padding: 0px;
+  margin: 0px;
+}
+
+#trackers {
+  list-style: none;
+  background: #f00;
+  display: flex;
+  flex-flow: row wrap;
+  width: 100%;
+  height: 175px;
+  overflow-y: auto;
+  padding-bottom: 25px;
+}
+
+.tracker {
+  width: 250px;
+  height: 50px;
+  margin-top: 25px;
+  margin-left: 25px;
+  background-color: #0f0;
 }
 
 .hidden {
-	display: none;
+  display: none;
 }
