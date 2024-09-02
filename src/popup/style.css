@@ -1,32 +1,34 @@
 html,
 body {
-  width: 575px;
-  height: 300px;
-  overflow: hidden;
-  padding: 0px;
-  margin: 0px;
+	width: 575px;
+	height: 300px;
+	overflow: hidden;
+	padding: 0px;
+	margin: 0px;
 }
 
 #trackers {
-  list-style: none;
-  background: #f00;
-  display: flex;
-  flex-flow: row wrap;
-  width: 100%;
-  height: 175px;
-  overflow-y: auto;
-  padding-bottom: 25px;
-  scrollbar-width: none;
+	list-style: none;
+	/* background: #f00; */
+	display: flex;
+	flex-flow: row wrap;
+	width: 100%;
+	height: 175px;
+	overflow-y: auto;
+	padding-bottom: 25px;
+	scrollbar-width: none;
+	box-shadow: 0 -2px 20px 0 rgba(0, 0, 0, 0.19) inset;
 }
 
 .tracker {
-  width: 250px;
-  height: 50px;
-  margin-top: 25px;
-  margin-left: 25px;
-  background-color: #0f0;
+	width: 250px;
+	height: 50px;
+	margin-top: 25px;
+	margin-left: 25px;
+	border-radius: 4px;
+	background-color: #0f0;
 }
 
 .hidden {
-  display: none;
+	display: none;
 }
