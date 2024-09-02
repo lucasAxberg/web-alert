@@ -16,6 +16,7 @@ body {
   height: 175px;
   overflow-y: auto;
   padding-bottom: 25px;
+  scrollbar-width: none;
 }
 
 .tracker {
