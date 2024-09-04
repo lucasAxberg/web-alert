@@ -1,17 +1,19 @@
 {
-  "manifest_version": 2,
-  "name": "WebAlert",
-  "version": "0.0",
+	"manifest_version": 2,
+	"name": "WebAlert",
+	"version": "0.0",
 
-  "description": "Allows you to track data on websites and get one unified newsletter",
+	"description": "Allows you to track data on websites and get one unified newsletter",
 
-  "icons": {
-    "48": "icons/Logo_48.png"
-  },
+	"icons": {
+		"48": "icons/Logo_48.png"
+	},
 
-  "browser_action": {
-    "default_icon": "icons/Logo_32.png",
-    "default_title": "WebAlert",
-    "default_popup": "src/popup/index.html"
-  }
+	"permissions": ["activeTab"],
+
+	"browser_action": {
+		"default_icon": "icons/Logo_32.png",
+		"default_title": "WebAlert",
+		"default_popup": "src/popup/index.html"
+	}
 }
