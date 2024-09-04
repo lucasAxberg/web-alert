@@ -29,6 +29,34 @@ body {
 	background-color: #0f0;
 }
 
+#bottom {
+	height: 100px;
+	width: 100%;
+	background-color: aqua;
+	display: flex;
+	justify-content: space-between;
+	align-items: end;
+}
+
+.bottom-button {
+	width: 45px;
+	height: 45px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.bottom-container {
+	display: flex;
+	margin: 15px;
+	gap: 15px;
+}
+
+img {
+	height: 100%;
+	width: 100%;
+}
+
 .hidden {
 	display: none;
 }
