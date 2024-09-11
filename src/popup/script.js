@@ -28,7 +28,11 @@ function remove_function() {
 }
 
 function settings_function() {
-	print_console("settings");
+	let main_content = document.getElementById("popup_content");
+	let settings_content = document.getElementById("settings_content");
+
+	main_content.classList.add("hidden");
+	settings_content.classList.remove("hidden");
 }
 
 function refresh_function() {
