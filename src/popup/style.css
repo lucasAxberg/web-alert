@@ -1,3 +1,10 @@
+:root {
+	--widget-height: 300px;
+	--widget-width: 575px;
+
+	--settings-menu-height: 30px;
+}
+
 html,
 body {
 	width: 575px;
@@ -63,7 +70,7 @@ img {
 }
 
 #settings-text {
-	font-size: 30px;
+	font-size: calc(var(--settings-menu-height) - 6px);
 	font-family: monospace;
 	text-align: center;
 	width: 200px;
@@ -75,10 +82,18 @@ img {
 	display: flex;
 	justify-content: space-between;
 	width: 100%;
+	height: var(--settings-menu-height);
 }
 
 #settings-menu-buttons button {
-	width: 30px;
-	height: 30px;
+	width: var(--settings-menu-height);
+	height: var(--settings-menu-height);
 	background-color: #fff;
+}
+
+#settings-container {
+	background-color: #0f0;
+	/* height: calc(100% - 30px); */
+	height: calc(var(--widget-height) - var(--settings-menu-height));
+	width: var(--widget-width);
 }
