@@ -97,3 +97,8 @@ img {
 	height: calc(var(--widget-height) - var(--settings-menu-height));
 	width: var(--widget-width);
 }
+
+#server-settings {
+	display: flex;
+	justify-content: space-between;
+}
