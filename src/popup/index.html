@@ -6,7 +6,7 @@
 	</head>
 	<body>
 		<!-- Main page -->
-		<div id="popup_content">
+		<div id="popup_content" class="hidden">
 			<div id="top">
 				<div id="trackers">
 					<div class="tracker"></div>
@@ -39,8 +39,16 @@
 			</div>
 		</div>
 		<!-- Settings page -->
-		<div id="settings_content" class="hidden">
-			<div id="top_bar">Settings</div>
+		<div id="settings_content" class="">
+			<div id="settings-menu-buttons">
+				<button id="return">
+					<img src="../../icons/arrow-left-svgrepo-com.svg" alt="" />
+				</button>
+				<button id="exit">
+					<img src="../../icons/xmark-svgrepo-com.svg" alt="" />
+				</button>
+				<div id="settings-text">Settings</div>
+			</div>
 		</div>
 		<!-- Errors -->
 		<div id="error_content" class="hidden"></div>

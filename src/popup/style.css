@@ -62,8 +62,23 @@ img {
 	display: none;
 }
 
-#top_bar {
-	font-size: x-large;
+#settings-text {
+	font-size: 30px;
 	font-family: monospace;
 	text-align: center;
+	width: 200px;
+	position: absolute;
+	right: calc(100% / 2 - 200px / 2);
+}
+
+#settings-menu-buttons {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+}
+
+#settings-menu-buttons button {
+	width: 30px;
+	height: 30px;
+	background-color: #fff;
 }
