@@ -33,7 +33,14 @@ function settings_function() {
 
 	// main_content.classList.add("hidden");
 	// settings_content.classList.remove("hidden");
-	browser.tabs.create({ url: "/src/settings.html"});
+	browser.tabs.create({ 
+		url: "/src/settings.html",
+	  // active: false,
+	}).then((tab) => {
+  browser.tabs.executeScript(tab.id, {
+    file: '/src/settings.js'
+  });
+});;
 }
 
 function refresh_function() {

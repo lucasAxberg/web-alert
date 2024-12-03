@@ -8,7 +8,45 @@
 </head>
 
 <body>
+  <div style="display: flex; width: 400px; flex-direction: column; gap: 5px;">
 
+    <h4 style="margin-top: 10px; margin-bottom: 5px;">Server settings</h4>
+    <p style="margin: 0px; margin-bottom: 5px;">
+      <input type="checkbox" name="use" id="use-server">
+      Use remote server
+    </p>
+    <p style="margin: 0px;">
+      <input style="width: 150px;" type="text" name="ip" id="ip" placeholder="192.198.0.1">
+      IP address
+    </p>
+    <p style="margin: 0px;">
+      <input style="width: 150px;" type="text" name="port" id="port" placeholder="443">
+      Server port
+    </p>
+    <hr style="width: 100vw; margin-top: 0px; margin-bottom: 0px;">
+
+    <h4 style="margin-top: 10px; margin-bottom: 5px;">Data settings</h4>
+    <p style="margin: 0px; margin-bottom: 5px;">
+      <input type="checkbox" name="use" id="use-server">
+      Use data encryption
+    </p>
+    <p style="margin: 0px; margin-bottom: 5px;">
+      <select name="encryption" id="enc" style="width: 100px;">
+        <option value="AES-256">AES-256</option>
+        <option value="RSA-4096">RSA-4096</option>
+      </select>
+      Encryption protocol
+    </p>
+    <p style="margin: 0px; margin-bottom: 5px;">
+      <input type="text" name="key" id="pub-key" style="width: 150px;">
+      Public key
+    </p>
+
+  </div>
+  <!-- <script src="src/settings.js" /> -->
+  <!-- <script> -->
+
+  <!-- </script> -->
 </body>
 
 </html>
