@@ -28,11 +28,12 @@ function remove_function() {
 }
 
 function settings_function() {
-	let main_content = document.getElementById("popup_content");
-	let settings_content = document.getElementById("settings_content");
+	// let main_content = document.getElementById("popup_content");
+	// let settings_content = document.getElementById("settings_content");
 
-	main_content.classList.add("hidden");
-	settings_content.classList.remove("hidden");
+	// main_content.classList.add("hidden");
+	// settings_content.classList.remove("hidden");
+	browser.tabs.create({ url: "/src/settings.html"});
 }
 
 function refresh_function() {
