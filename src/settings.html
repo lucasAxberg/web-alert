@@ -8,11 +8,12 @@
 </head>
 
 <body>
-  <div style="display: flex; width: 400px; flex-direction: column; gap: 5px;">
+  <div id="main" style="display: flex; width: 400px; flex-direction: column; gap: 5px;">
+    <form id="form">
 
-    <h4 style="margin-top: 10px; margin-bottom: 5px;">Server settings</h4>
+      <h4 style="margin-top: 10px; margin-bottom: 5px;">Server settings</h4>
     <p style="margin: 0px; margin-bottom: 5px;">
-      <input type="checkbox" name="use" id="use-server">
+      <input type="checkbox" name="use-server" id="use-server">
       Use remote server
     </p>
     <p style="margin: 0px;">
@@ -27,20 +28,22 @@
 
     <h4 style="margin-top: 10px; margin-bottom: 5px;">Data settings</h4>
     <p style="margin: 0px; margin-bottom: 5px;">
-      <input type="checkbox" name="use" id="use-server">
+      <input type="checkbox" name="use-encryption" id="use-encryption">
       Use data encryption
     </p>
     <p style="margin: 0px; margin-bottom: 5px;">
-      <select name="encryption" id="enc" style="width: 100px;">
+      <select name="encryption" id="enc" form="form" style="width: 100px;">
         <option value="AES-256">AES-256</option>
         <option value="RSA-4096">RSA-4096</option>
       </select>
       Encryption protocol
     </p>
     <p style="margin: 0px; margin-bottom: 5px;">
-      <input type="text" name="key" id="pub-key" style="width: 150px;">
+      <input type="text" name="public-key" id="pub-key" style="width: 150px;">
       Public key
     </p>
+    <input type="submit" value="apply">Apply</input>
+  </form>
 
   </div>
   <!-- <script src="src/settings.js" /> -->
