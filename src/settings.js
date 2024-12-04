@@ -1,39 +1,31 @@
+// Form element reference 
 const form = document.getElementById('form');
+
 form.addEventListener('submit', function(event) {
+    // Prevent the default submit function from the form
     event.preventDefault();
 
-        const formData = new FormData(form);
+    // Create a formdata object to access the values
+    const formData = new FormData(form);
 
-        // const formDataObj = {
-        //   "ip": formData.get('ip'),
-        //   "port": formData.get('port'),
-        //   "use-server": formData.get('use-server'),
-        //   "use-encryption": formData.get('use-encryption'),
-        //   "encryption": formData.get('encryption'),
-        // };
-        localStorage.clear()
-        for (const [key, value] of formData) {
-            localStorage.setItem(key, value);
-        }
-        console.log(formData);
+    // Clear unused and update stored data
+    localStorage.clear()
+    for (const [key, value] of formData) {
+        localStorage.setItem(key, value);
+    }
+
 });
 
 
-console.log("test:", localStorage.getItem("test"))
-localStorage.setItem("test", "TEST_VALUE")
 const formData = new FormData(form);
-for (const [key, value] of formData) {
-    tmp_val = localStorage.getItem(key)
-    console.log(key, ": ", value, " | ", tmp_val)
-    document.querySelector(`*[name=${key}]`).value = tmp_val
+
+// Apply saved settings to inputs except the checkboxes 
+for (const key of formData.keys()) {
+    document.querySelector(`*[name=${key}]`).value = localStorage.getItem(key)
 }
 
-const checkboxes = form.querySelectorAll('input[type="checkbox"]');
-const checkboxNames = [];
-
-checkboxes.forEach(function(checkbox) {
-    tmp_val = localStorage.getItem(checkbox.name)
-    console.log(checkbox.name, " | ", tmp_val)
-    checkbox.checked = tmp_val ? true : false
+// Apply the stored state to all checkboxes
+form.querySelectorAll('input[type="checkbox"]').forEach(function(checkbox) {
+    checkbox.checked = localStorage.getItem(checkbox.name) ? true : false
 });
 
