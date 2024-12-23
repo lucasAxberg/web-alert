@@ -1,34 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<link rel="stylesheet" href="../main.css" />
-	</head>
-	<body class="w-96 h-72 overflow-hidden p-0 m-0">
-		<!-- Main page -->
-		<div id="popup_content">
-			<div id="bottom" class="h-24 w-full bg-ctp-teal flex justify-between items-end">
-				<div id="bottom-left" class="flex m-4 gap-4">
-					<button id="add" class="w-12 h-12 flex justify-center items-center bg-ctp-flamingo">
-						<img src="../../icons/plus-large-svgrepo-com.svg" alt="" class="h-full w-full pointer-events-none"/>
-					</button>
-					<button id="remove" class="w-12 h-12 flex justify-center items-center bg-ctp-mauve">
-						<img src="../../icons/minus-svgrepo-com.svg" alt="" class="h-full w-full pointer-events-none" />
-					</button>
-				</div>
 
-				<div id="bottom-right" class="flex m-4 gap-4">
-					<button id="refresh" class="w-12 h-12 flex justify-center items-center bg-ctp-rosewater">
-						<img src="../../icons/refresh-ccw-alt-svgrepo-com.svg" alt="" class="h-full w-full pointer-events-none" />
-					</button>
-					<button id="settings" class="w-12 h-12 flex justify-center items-center bg-ctp-red">
-						<img src="../../icons/gear-svgrepo-com.svg" alt="" class="h-full w-full pointer-events-none" />
-					</button>
-				</div>
-			</div>
+<head>
+	<meta charset="UTF-8" />
+	<link rel="stylesheet" href="../main.css" />
+</head>
+
+<body class="w-fit overflow-hidden p-0 m-0 bg-ctp-surface0">
+	<!-- Main page -->
+	<div id="popup_content">
+		<div id="top" class="flex w-full items-center justify-center h-10 pt-0.5">
+			<h1 id="title" class="text-center font-mono text-2xl font-semibold"><span class="text-red-500">Web</span><span
+					class="text-orange-400">Alert</span></h1>
 		</div>
-		<!-- Errors -->
-		<div id="error_content" class="hidden"></div>
-		<script src="script.js"></script>
-	</body>
+
+		<div id="middle" class="w-full h-16 flex justify-center mb-3">
+			<button id="add" class="w-16 h-16 flex justify-center items-center bg-ctp-green rounded">
+				<img src="../../icons/plus-large-svgrepo-com.svg" alt="" class="h-full w-full pointer-events-none" />
+			</button>
+		</div>
+
+		<div id="bottom" class="h-11 w-full flex justify-center bg-ctp-surface2">
+			<button id="remove"
+				class="w-11 h-11 flex justify-center items-center bg-ctp-surface2 hover:bg-ctp-overlay1 rounded p-2">
+				<img src="../../icons/minus-svgrepo-com.svg" alt="" class="h-full w-full pointer-events-none" />
+			</button>
+
+			<button id="refresh"
+				class="w-11 h-11 flex justify-center items-center bg-ctp-surface2 hover:bg-ctp-overlay1 rounded p-2">
+				<img src="../../icons/refresh-ccw-alt-svgrepo-com.svg" alt="" class="h-full w-full pointer-events-none" />
+			</button>
+			<button id="settings"
+				class="w-11 h-11 flex justify-center items-center bg-ctp-surface2 hover:bg-ctp-overlay1 rounded p-2">
+				<img src="../../icons/gear-svgrepo-com.svg" alt="" class="h-full w-full pointer-events-none" />
+			</button>
+		</div>
+	</div>
+	<!-- Errors -->
+	<div id="error_content" class="hidden"></div>
+	<script src="script.js"></script>
+</body>
+
 </html>
