@@ -21,6 +21,7 @@ document.addEventListener("click", (e) => {
 
 function add_function() {
 	print_console("add");
+	browser.tabs.executeScript({file: "/src/main.js"})
 }
 
 function remove_function() {
