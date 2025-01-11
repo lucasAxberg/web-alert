@@ -1,10 +1,11 @@
 const border_width = 4;
-let hover_box = document.createElement("div");
+const hover_box = document.createElement("div");
 hover_box.style.position = "absolute";
 hover_box.style.pointerEvents = "none";
 
 let layer = 0;
-let max_layer = 0;
+let mouse_viewport_x = 0;
+let mouse_viewport_y = 0; 
 
 // Ensure all items are accessable on the mousemove event
 new Promise(() => {
@@ -16,23 +17,46 @@ new Promise(() => {
   })
 })
 
+
 document.addEventListener("mousemove", (event) => {
 
+  // Get position of mouse
+  mouse_viewport_x = event.pageX - window.scrollX;
+  mouse_viewport_y = event.pageY - window.scrollY;
+
+  update_highlight(mouse_viewport_x, mouse_viewport_y, layer)
+  
+})
+
+document.addEventListener("keypress", (event) => {
+
+  // Adjust the layer based on which key was pressed
+  if (event.key == "+") {
+    layer += 1
+  } else if (event.key == "-") {
+    layer -= 1
+  } else if (event.key == "0") {
+    layer = 0
+  } else return
+
+  update_highlight(mouse_viewport_x, mouse_viewport_y, layer)
+})
+
+function update_highlight(pos_x, pos_y, z_index){
+
   // Get all elements under the cursor 
-  const mouse_viewport_x = event.pageX - window.scrollX;
-  const mouse_viewport_y = event.pageY - window.scrollY;
-  let elements = document.elementsFromPoint(mouse_viewport_x, mouse_viewport_y)
+  let elements = document.elementsFromPoint(pos_x, pos_y)
 
   // Ensures the layer is within the array
-  max_layer = elements.length - 1
-  if (layer > max_layer) {
-    layer = max_layer
-  } else if (layer < 0){
-    layer = 0
+  const max_z = elements.length - 1
+  if (z_index > max_z) {
+    z_index = max_z
+  } else if (z_index < 0){
+    z_index = 0
   }
 
   // Get specified target and its information
-  let target = elements[layer]
+  let target = elements[z_index]
   const target_bounds = target.getBoundingClientRect()
   const target_height = target_bounds.height
   const target_width = target_bounds.width
@@ -48,17 +72,4 @@ document.addEventListener("mousemove", (event) => {
   if (document.body.contains(hover_box) == false){
     document.body.appendChild(hover_box)
   }
-  
-})
-
-document.addEventListener("keypress", (event) => {
-
-  // Adjust the layer based on which key was pressed
-  if (event.key == "+") {
-    layer += 1
-  } else if (event.key == "-") {
-    layer -= 1
-  } else if (event.key == "0") {
-    layer = 0
-  }
-})
+}
