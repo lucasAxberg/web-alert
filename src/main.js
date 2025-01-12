@@ -17,19 +17,16 @@ new Promise(() => {
   })
 })
 
-
-document.addEventListener("mousemove", (event) => {
-
+function handleMouseMove(event) {
   // Get position of mouse
   mouse_viewport_x = event.pageX - window.scrollX;
   mouse_viewport_y = event.pageY - window.scrollY;
 
+  // Update highlight
   update_highlight(mouse_viewport_x, mouse_viewport_y, layer)
-  
-})
+}
 
-document.addEventListener("keypress", (event) => {
-
+function handleKeyPress(event){
   // Adjust the layer based on which key was pressed
   if (event.key == "+") {
     layer += 1
@@ -38,9 +35,10 @@ document.addEventListener("keypress", (event) => {
   } else if (event.key == "0") {
     layer = 0
   } else return
-
+  
+  // Update highlight
   update_highlight(mouse_viewport_x, mouse_viewport_y, layer)
-})
+}
 
 function update_highlight(pos_x, pos_y, z_index){
 
@@ -73,3 +71,26 @@ function update_highlight(pos_x, pos_y, z_index){
     document.body.appendChild(hover_box)
   }
 }
+
+function handleClick(event) {
+  event.preventDefault()
+
+  // Remove eventlisteners to stop higlight
+  document.removeEventListener("mousemove", handleMouseMove)
+  document.removeEventListener("keypress", handleKeyPress)
+  document.body.removeChild(hover_box)
+
+  // Only continue if button pressed is left-click
+  if (event.button == 2) return
+
+  // Recursive funtion that looks for a unique identifier ("class", "name", "id")
+  // and creates an xpath from it. If none was found call itself on the parent 
+  // node and repeat until one with a unique identifier is found and build from it
+  
+}
+
+document.addEventListener("mousemove", handleMouseMove)
+document.addEventListener("keypress", handleKeyPress)
+document.addEventListener("click", handleClick)
+
+
