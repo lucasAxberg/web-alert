@@ -42,19 +42,8 @@ function handleKeyPress(event){
 
 function update_highlight(pos_x, pos_y, z_index){
 
-  // Get all elements under the cursor 
-  let elements = document.elementsFromPoint(pos_x, pos_y)
-
-  // Ensures the layer is within the array
-  const max_z = elements.length - 1
-  if (z_index > max_z) {
-    z_index = max_z
-  } else if (z_index < 0){
-    z_index = 0
-  }
-
-  // Get specified target and its information
-  let target = elements[z_index]
+  // Get specified targets information
+  let target = getElementOnPos(pos_x, pos_y, z_index)
   const target_bounds = target.getBoundingClientRect()
   const target_height = target_bounds.height
   const target_width = target_bounds.width
@@ -71,6 +60,23 @@ function update_highlight(pos_x, pos_y, z_index){
     document.body.appendChild(hover_box)
   }
 }
+
+function getElementOnPos(pos_x, pos_y, z_index) {
+  
+  // Get all elements under the cursor 
+  let elements = document.elementsFromPoint(pos_x, pos_y)
+
+  // Ensures the layer is within the array
+  const max_z = elements.length - 1
+  if (z_index > max_z) {
+    z_index = max_z
+  } else if (z_index < 0){
+    z_index = 0
+  }
+    
+  return elements[z_index]
+}
+
 
 function handleClick(event) {
   event.preventDefault()
