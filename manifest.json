@@ -1,18 +1,25 @@
 {
-	"manifest_version": 2,
-	"name": "WebAlert",
+	"manifest_version": 3,
+	"name": "web-alert",
 	"version": "0.0",
 	"description": "Allows you to track data on websites and get one unified newsletter",
 	"icons": {
 		"48": "icons/Logo_48.png"
 	},
 	"permissions": [
-		"activeTab"
+		"tabs",
+		"activeTab",
+		"scripting"
 	],
-	"browser_action": {
+	"action": {
 		"default_icon": "icons/Logo_32.png",
-		"default_title": "WebAlert",
+		"default_title": "web-alert",
 		"default_popup": "src/popup/index.html"
+	},
+	"background":{
+		"scripts":[
+			"src/background.js"
+		]
 	},
 	"browser_specific_settings": {
 		"gecko": {

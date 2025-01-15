@@ -13,44 +13,25 @@ document.addEventListener("click", (e) => {
 			refresh_function();
 			break;
 		default:
-			browser.tabs.executeScript({
-				code: 'console.log("other")',
-			});
 	}
 });
 
 function add_function() {
-	print_console("add");
-	browser.tabs.executeScript({file: "/src/main.js"})
+	// browser.scripting.executeScript({file: "/src/main.js"})
 	window.close()
 }
 
 function remove_function() {
-	print_console("remove");
 }
 
 function settings_function() {
-	// let main_content = document.getElementById("popup_content");
-	// let settings_content = document.getElementById("settings_content");
-
-	// main_content.classList.add("hidden");
-	// settings_content.classList.remove("hidden");
+	// Create settings tab
 	browser.tabs.create({ 
 		url: "/src/settings.html",
-	  // active: false,
-	}).then((tab) => {
-  browser.tabs.executeScript(tab.id, {
-    file: '/src/settings.js'
-  });
-});;
+	  active: true,
+	})
 }
 
 function refresh_function() {
-	print_console("refresh");
 }
 
-function print_console(message) {
-	browser.tabs.executeScript({
-		code: `console.log("${message}")`,
-	});
-}
