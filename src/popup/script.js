@@ -16,9 +16,14 @@ document.addEventListener("click", (e) => {
 	}
 });
 
+
 function add_function() {
 	// browser.scripting.executeScript({file: "/src/main.js"})
-	window.close()
+	browser.tabs.query({active: true, currentWindow: true})
+	.then((tabs) => {
+		browser.tabs.sendMessage(tabs[0].id, {action: "enableEventListener"})
+		// window.close()
+	})
 }
 
 function remove_function() {

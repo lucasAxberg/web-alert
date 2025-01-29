@@ -21,6 +21,12 @@
 			"src/background.js"
 		]
 	},
+	"content_scripts": [
+	  {
+	    "matches": ["<all_urls>"],
+	    "js": ["src/message.js"]
+	  }
+	],
 	"browser_specific_settings": {
 		"gecko": {
 			"id": "lucas.axberg@gmail.com"
