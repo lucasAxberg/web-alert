@@ -24,6 +24,7 @@ new Promise(() => {
   })
 })
 
+// Listen for messages sent from main addon
 browser.runtime.onMessage.addListener((data, sender) => {
   if (data.action === "enableEventListener") {
     if (!click_listener) {
@@ -52,9 +53,11 @@ browser.runtime.onMessage.addListener((data, sender) => {
 })
 
 function handle_click(event){
+  const element = getElementOnPos(mouse_viewport_x, mouse_viewport_y, layer)
+  const path = getUniquePath(4, element)
   browser.runtime.sendMessage({
     msg: "clicked",
-    path: "<placeholder>"
+    path: path
   })
 }
 
@@ -82,7 +85,6 @@ function handle_key(event) {
   update_highlight(mouse_viewport_x, mouse_viewport_y, layer)
   
 }
-
 
 function update_highlight(pos_x, pos_y, z_index){
 
@@ -119,5 +121,73 @@ function getElementOnPos(pos_x, pos_y, z_index) {
   }
     
   return elements[z_index]
+}
+
+function getUniquePath(depth, element) {
+  let sibling_unique_class;
+  let sibling_unique_tag;
+  let sibling_index;
+
+  // Check if element has id
+  if (element.hasAttribute("id")){
+    return "id=" + element.id
+  }
+
+  // Check if class name is unique
+  for (let i = 0; i < element.classList.length; i++) {
+    const class_name = element.classList[i]
+    if (document.getElementsByClassName(class_name).length == 1){
+      return "global_class=" + class_name
+    }
+  }
+
+  // Check if class is unique compared to sibling
+  for (let i = 0; i < element.classList.length; i++) {
+    const class_name = element.classList[i]
+    let no_sibling = false // Variable for tracking if a sibling shared the class
+    for (let i = 0; i < element.parentNode.children.length; i++) {
+      sibling = element.parentNode.children[i]
+      if (sibling.classList.contains(class_name) && sibling != element) {
+        no_sibling = false
+        break
+      } else {
+        no_sibling = true
+      }
+    }
+    // Break the loop and set sibling_unique_class to the class name no sibling has
+    if (no_sibling) {
+      sibling_unique_class = "local_class=" + class_name
+      break
+    }
+  }
+
+  // Check if the tagname is unique among its siblings
+  let tag_sibling = true;
+  for (let i = 0; i < element.parentNode.children.length; i++) {
+    sibling = element.parentNode.children[i]
+    if (sibling.tagName == element.tagName && sibling != element) {
+      tag_sibling = true;
+      break
+    } else {
+      tag_sibling = false;
+    }
+  }
+  // If no sibling has the same tag name set sibling_unique_tag to it
+  if (tag_sibling == false) {
+    sibling_unique_tag = "tag=" + element.tagName.toLowerCase()
+  }
+
+  // Get the index of the element in its parent node
+  sibling_index = "index=" + Array.from(element.parentNode.children).indexOf(element)
+
+  // Save the most unique property among its siblings
+  let most_unique = sibling_unique_class || sibling_unique_tag || sibling_index || "nothing_unique"
+
+  // While the depth is above 1 call itself again
+  if (depth > 1) {
+    return getUniquePath(depth - 1, element.parentElement) + "/" + most_unique
+  } else {
+    return "nothing_unique"
+  }
 }
 
