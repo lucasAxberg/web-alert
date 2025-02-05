@@ -52,12 +52,16 @@ browser.runtime.onMessage.addListener((data, sender) => {
   }
 })
 
-function handle_click(event){
+function handle_click(){
   const element = getElementOnPos(mouse_viewport_x, mouse_viewport_y, layer)
   const path = getUniquePath(4, element)
   browser.runtime.sendMessage({
     msg: "clicked",
-    path: path
+    name: document.title,
+    path: path,
+    url: window.location.href,
+    value: element.innerHTML,
+    checked: Date.now()
   })
 }
 
