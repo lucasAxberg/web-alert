@@ -12,7 +12,39 @@ browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 browser.runtime.onMessage.addListener((message, sender) => {
     console.log("MSG recieved")
     if (message.msg == "clicked") {
-        console.log(message.path)
+        
+        // Get ip address and port number from stored data
+        const ip = window.localStorage.getItem("ip");
+        const port = window.localStorage.getItem("port");
+
+        // Only run code if 'ip' and 'port' exists
+        if (ip !== "" && ip !== null && port !== "" && port !== null){
+
+            // Get the tracked data from server
+            fetch("http://" + ip + ":" + port)
+            .then((response) => response.text())
+            .then((data) => {
+
+                // Calculate index
+                const res_obj = JSON.parse(data)
+                const index = Object.keys(res_obj).length
+
+                // Set object as value to the key [index]
+                const { msg, ...new_object } = message;
+                const obj = {}
+                obj[index] = new_object
+
+                // Send data to server
+                fetch("http://" + ip + ":" + port, {
+                    method: "POST",
+                    body: JSON.stringify(obj),
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8"
+                    }
+                });
+            })
+
+        }
     		browser.tabs.query({active: true, currentWindow: true})
     		.then((tabs) => {
     			browser.tabs.sendMessage(tabs[0].id, {action: "dissableEventListener"})
