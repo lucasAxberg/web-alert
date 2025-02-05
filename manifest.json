@@ -14,7 +14,7 @@
 	"action": {
 		"default_icon": "icons/Logo_32.png",
 		"default_title": "web-alert",
-		"default_popup": "src/popup/index.html"
+		"default_popup": "src/popup.html"
 	},
 	"background":{
 		"scripts":[
@@ -24,7 +24,7 @@
 	"content_scripts": [
 	  {
 	    "matches": ["<all_urls>"],
-	    "js": ["src/message.js"]
+	    "js": ["src/selector.js"]
 	  }
 	],
 	"browser_specific_settings": {

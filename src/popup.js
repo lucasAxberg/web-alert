@@ -18,7 +18,6 @@ document.addEventListener("click", (e) => {
 
 
 function add_function() {
-	// browser.scripting.executeScript({file: "/src/main.js"})
 	browser.tabs.query({active: true, currentWindow: true})
 	.then((tabs) => {
 		return browser.tabs.sendMessage(tabs[0].id, {action: "enableEventListener"})
