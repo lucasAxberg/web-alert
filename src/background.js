@@ -9,6 +9,10 @@ browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     }
 });
 
+function data_exists(data) {
+    return data !== "" && data !== null
+}
+
 browser.runtime.onMessage.addListener((message, sender) => {
     console.log("MSG recieved")
     if (message.msg == "clicked") {
@@ -18,7 +22,7 @@ browser.runtime.onMessage.addListener((message, sender) => {
         const port = window.localStorage.getItem("port");
 
         // Only run code if 'ip' and 'port' exists
-        if (ip !== "" && ip !== null && port !== "" && port !== null){
+        if (data_exists(ip) && data_exists(port)){
 
             // Get the tracked data from server
             fetch("http://" + ip + ":" + port)
