@@ -25,7 +25,7 @@ browser.runtime.onMessage.addListener((message, sender) => {
         if (data_exists(ip) && data_exists(port)){
 
             // Get the tracked data from server
-            fetch("http://" + ip + ":" + port)
+            fetch("http://" + ip + ":" + port + "?delete=false")
             .then((response) => response.text())
             .then((data) => {
 
