@@ -25,7 +25,7 @@ browser.runtime.onMessage.addListener((message, sender) => {
         if (data_exists(ip) && data_exists(port)){
 
             // Get the tracked data from server
-            fetch("http://" + ip + ":" + port + "?delete=false")
+            fetch("http://" + ip + ":" + port)
             .then((response) => response.text())
             .then((data) => {
 
@@ -39,7 +39,7 @@ browser.runtime.onMessage.addListener((message, sender) => {
                 obj[index] = new_object
 
                 // Send data to server
-                fetch("http://" + ip + ":" + port, {
+                fetch("http://" + ip + ":" + port + "?delete=false", {
                     method: "POST",
                     body: JSON.stringify(obj),
                     headers: {
