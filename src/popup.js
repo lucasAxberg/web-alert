@@ -34,7 +34,7 @@ document.addEventListener("click", (e) => {
 			add_function();
 			break;
 		case "remove":
-			remove_function();
+			list_function();
 			break;
 		case "settings":
 			settings_function();
@@ -57,7 +57,12 @@ function add_function() {
 	})
 }
 
-function remove_function() {
+function list_function() {
+	// Create trackers tab
+	browser.tabs.create({ 
+		url: "/src/list.html",
+	  active: true,
+	})
 }
 
 function settings_function() {
