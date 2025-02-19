@@ -45,7 +45,13 @@ browser.runtime.onMessage.addListener((message, sender) => {
                     headers: {
                         "Content-type": "application/json; charset=UTF-8"
                     }
-                });
+                })
+                .then((response) => {
+                    // Store new object locally if data was recieved successfully
+                    if (response.status == 200){
+                        window.localStorage.setItem("trackers", JSON.stringify(obj))
+                    }
+                })
             })
 
         }
