@@ -54,7 +54,7 @@ browser.runtime.onMessage.addListener((data, sender) => {
 
 function handle_click(){
   const element = getElementOnPos(mouse_viewport_x, mouse_viewport_y, layer)
-  const path = getUniquePath(4, element)
+  const path = getUniquePath(25, element)
   browser.runtime.sendMessage({
     msg: "clicked",
     name: document.title,
@@ -134,14 +134,14 @@ function getUniquePath(depth, element) {
 
   // Check if element has id
   if (element.hasAttribute("id")){
-    return "id=" + element.id
+    return "//" + element.tagName.toLowerCase() + '[@id="' + element.id + '"]'
   }
 
   // Check if class name is unique
   for (let i = 0; i < element.classList.length; i++) {
     const class_name = element.classList[i]
     if (document.getElementsByClassName(class_name).length == 1){
-      return "global_class=" + class_name
+      return "//" + element.tagName.toLowerCase() + '[@class="' + class_name + '"]'
     }
   }
 
@@ -160,7 +160,7 @@ function getUniquePath(depth, element) {
     }
     // Break the loop and set sibling_unique_class to the class name no sibling has
     if (no_sibling) {
-      sibling_unique_class = "local_class=" + class_name
+      sibling_unique_class = element.tagName.toLowerCase() + '[@class="' + class_name + '"]'
       break
     }
   }
@@ -178,14 +178,19 @@ function getUniquePath(depth, element) {
   }
   // If no sibling has the same tag name set sibling_unique_tag to it
   if (tag_sibling == false) {
-    sibling_unique_tag = "tag=" + element.tagName.toLowerCase()
+    sibling_unique_tag = + element.tagName.toLowerCase()
   }
 
   // Get the index of the element in its parent node
-  sibling_index = "index=" + Array.from(element.parentNode.children).indexOf(element)
+  const sibling_list = Array.from(element.parentNode.children).filter((e)=>e.tagName == element.tagName)
+  if (sibling_list.length > 1) {
+    sibling_index = element.tagName.toLowerCase() + "[" + (sibling_list.indexOf(element)+ 1) + "]"
+  } else {
+    sibling_index = element.tagName.toLowerCase()
+  }
 
   // Save the most unique property among its siblings
-  let most_unique = sibling_unique_class || sibling_unique_tag || sibling_index || "nothing_unique"
+  let most_unique = sibling_unique_class || sibling_unique_tag || sibling_index
 
   // While the depth is above 1 call itself again
   if (depth > 1) {
