@@ -36,6 +36,7 @@ browser.runtime.onMessage.addListener((message, sender) => {
                 // Set object as value to the key [index]
                 const { msg, ...new_object } = message;
                 const obj = {}
+                new_object["interval"] = 1000 * 60 //TODO: Change to read from default stored value
                 obj[index] = new_object
 
                 // Send data to server
