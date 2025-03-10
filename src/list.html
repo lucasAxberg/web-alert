@@ -10,11 +10,11 @@
   </head>
 
   <body class="flex">
-    <div id="left" class="h-screen w-2/5 bg-slate-400 flex flex-col gap-6 items-center pt-6">
+    <div id="left" class="h-screen w-2/5 bg-ctp-overlay1 flex flex-col gap-6 items-center pt-6">
       <div class="h-24 w-11/12 bg-red-600 rounded-xl"></div>
       <div class="h-24 w-11/12 bg-red-600 rounded-xl"></div>
     </div>
-    <div id="right" class="h-screen w-3/5">
+    <div id="right" class="h-screen w-3/5 relative">
       <form class="m-3 text-lg flex flex-col">
         <div class="mb-3 flex flex-col">
           <label for="name">Name:</label>
@@ -39,6 +39,10 @@ Lorem ipsum odor amet, consectetuer adipiscing elit. Quis primis ad sociosqu non
           </textarea>
         </div>
       </form>
+      <div class="absolute bottom-0 w-full pb-3 flex justify-between px-3">
+        <button type="button" class="h-10 w-28 rounded-md bg-ctp-green">Save</button>
+        <button type="button" class="h-10 w-28 rounded-md bg-ctp-red">Delete</button>
+      </div>
     </div>
   </body>
 
