@@ -27,6 +27,24 @@ function save_button() {
   }
 }
 
+function delete_button() {
+  // Only run if current tracker is set
+  if (typeof current_tracker === 'string' && !isNaN(current_tracker)){
+
+    // Create an object and store the key and value of the tracker
+    obj = {}
+    obj[current_tracker] = {}
+  
+    // Post object to server
+    fetch('http://' + ip + ':' + port + '?delete=true', {
+      method: 'POST',
+      body: JSON.stringify(obj)
+    })
+    
+  }
+  
+}
+
 // Only run code if 'ip' and 'port' exists
 if (data_exists(ip) && data_exists(port)){
 
@@ -36,6 +54,7 @@ if (data_exists(ip) && data_exists(port)){
     .then((data) => {
 
       document.getElementById('save').onclick = save_button
+      document.getElementById('delete').onclick = delete_button
 
       // Get template and list to put it in
       const template = document.getElementById('tracker-template')
