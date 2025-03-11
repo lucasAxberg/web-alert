@@ -5,10 +5,26 @@ let current_tracker
 const ip = window.localStorage.getItem("ip");
 const port = window.localStorage.getItem("port");
 
-console.log("get")
-
 function data_exists(data) {
     return data !== "" && data !== null
+}
+
+function save_button() {
+  // Only run if current tracker is set
+  if (typeof current_tracker === 'string' && !isNaN(current_tracker)){
+
+    // Create an object and store the key and value of the tracker
+    obj = {}
+    trackers[current_tracker]['name'] = document.getElementById('name').value
+    obj[current_tracker] = trackers[current_tracker]
+  
+    // Post object to server
+    fetch('http://' + ip + ':' + port + '?delete=false', {
+      method: 'POST',
+      body: JSON.stringify(obj)
+    })
+    
+  }
 }
 
 // Only run code if 'ip' and 'port' exists
@@ -18,31 +34,43 @@ if (data_exists(ip) && data_exists(port)){
     fetch("http://" + ip + ":" + port)
     .then((response) => response.text())
     .then((data) => {
+
+      document.getElementById('save').onclick = save_button
+
+      // Get template and list to put it in
       const template = document.getElementById('tracker-template')
       const list = document.getElementById('left')
 
+      // Get all preset fields
       const name = document.getElementById('name')
       const last_checked = document.getElementById('date-and-time')
       const url = document.getElementById('url')
       const path = document.getElementById('path')
       const value = document.getElementById('value')
       
+      // Loop though data from server
       trackers = JSON.parse(data)
-
       for (const key in trackers) {
+
+        // Create a visible clone and set it's id
         const item = template.cloneNode(true)
         item.classList.remove('hidden')
         item.id = key
+
         item.onclick = () => {
+          // Set values of preset field on click
           name.value = trackers[key]["name"]
           last_checked.value = new Date(trackers[key]['checked']).toISOString().substring(0, 16)
           url.value = trackers[key]['url']
           path.value = trackers[key]['path']
           value.value = trackers[key]['value']
+                    
+          // Set current tracker
+          current_tracker = key
         }
-        list.appendChild(item)
 
-        console.log(key, trackers[key])
+        // Add item to list
+        list.appendChild(item)
       }
       
     })
