@@ -7,6 +7,14 @@ browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
             files: ['src/settings.js']
         });
     }
+
+    // Add list.js to list.html
+    if (changeInfo.status === 'complete' && tab.url.includes('list.html')) {
+        browser.scripting.executeScript({
+            target: { tabId: tabId },
+            files: ['src/list.js']
+        });
+    }
 });
 
 function data_exists(data) {
