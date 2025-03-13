@@ -13,17 +13,14 @@ function save_button() {
   // Only run if current tracker is set
   if (typeof current_tracker === 'string' && !isNaN(current_tracker)){
 
-    // Create an object and store the key and value of the tracker
-    obj = {}
+    // Update property of current tracker object
     trackers[current_tracker]['name'] = document.getElementById('name').value
-    obj[current_tracker] = trackers[current_tracker]
   
     // Post object to server
-    fetch('http://' + ip + ':' + port + '?delete=false', {
+    fetch('http://' + ip + ':' + port + '/update/' + current_tracker, {
       method: 'POST',
-      body: JSON.stringify(obj)
+      body: JSON.stringify(trackers[current_tracker])
     })
-    
   }
 }
 
@@ -31,25 +28,18 @@ function delete_button() {
   // Only run if current tracker is set
   if (typeof current_tracker === 'string' && !isNaN(current_tracker)){
 
-    // Create an object and store the key and value of the tracker
-    obj = {}
-    obj[current_tracker] = {}
-  
-    // Post object to server
-    fetch('http://' + ip + ':' + port + '?delete=true', {
-      method: 'POST',
-      body: JSON.stringify(obj)
+    // Tell server to remove the item with index of current_tracker
+    fetch('http://' + ip + ':' + port + '/data/' + current_tracker, {
+      method: 'DELETE',
     })
-    
   }
-  
 }
 
 // Only run code if 'ip' and 'port' exists
 if (data_exists(ip) && data_exists(port)){
 
     // Get the tracked data from server
-    fetch("http://" + ip + ":" + port)
+    fetch("http://" + ip + ":" + port + '/data')
     .then((response) => response.text())
     .then((data) => {
 
