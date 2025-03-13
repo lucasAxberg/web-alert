@@ -17,7 +17,7 @@ new Promise((resolve) => {
 	}
 	resolve({ip, port})
 })
-.then(({ip, port}) => fetch("http://" + ip + ":" + port)) // Get data
+.then(({ip, port}) => fetch("http://" + ip + ":" + port + '/data')) // Get data
 .then((response) => response.text()) // Get the text sent
 .then((data) => {
 	// Store data as JSON string

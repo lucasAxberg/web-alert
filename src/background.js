@@ -32,37 +32,22 @@ browser.runtime.onMessage.addListener((message, sender) => {
         // Only run code if 'ip' and 'port' exists
         if (data_exists(ip) && data_exists(port)){
 
-            // Get the tracked data from server
-            fetch("http://" + ip + ":" + port)
-            .then((response) => response.text())
-            .then((data) => {
+            // Extract all data exept 'msg' into a new object
+            const { msg, ...new_object } = message;
+            new_object["interval"] = 1000 * 60 //TODO: Change to read from default stored value
 
-                // Calculate index
-                const res_obj = JSON.parse(data)
-                const index = Object.keys(res_obj).length
-
-                // Set object as value to the key [index]
-                const { msg, ...new_object } = message;
-                const obj = {}
-                new_object["interval"] = 1000 * 60 //TODO: Change to read from default stored value
-                obj[index] = new_object
-
-                // Send data to server
-                fetch("http://" + ip + ":" + port + "?delete=false", {
-                    method: "POST",
-                    body: JSON.stringify(obj),
-                    headers: {
-                        "Content-type": "application/json; charset=UTF-8"
-                    }
-                })
-                .then((response) => {
-                    // Store new object locally if data was recieved successfully
-                    if (response.status == 200){
-                        window.localStorage.setItem("trackers", JSON.stringify(obj))
-                    }
-                })
+            // Send data to server
+            fetch("http://" + ip + ":" + port + "/add", {
+                method: "POST",
+                body: JSON.stringify(new_object),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                }
             })
-
+            .then((response) => {
+                if (response.status == 200){
+                }
+            })
         }
     		browser.tabs.query({active: true, currentWindow: true})
     		.then((tabs) => {
