@@ -4,7 +4,7 @@ let current_tracker
 const ip = window.localStorage.getItem("ip");
 const port = window.localStorage.getItem("port");
 
-function refresh_values() {
+async function refresh_values() {
 
   // Get ip address and port number from stored data
   const ip2 = window.localStorage.getItem('ip');
@@ -13,16 +13,14 @@ function refresh_values() {
   // Return empty object if server settings are incomplete
   if (!data_exists(ip2) || !data_exists(port2)) {
     console.log('Both "Port" and "IP" must be specified in server settings')
+    return
   }
   
   // Get data from server and store it locally
-  return fetch('http://' + ip2 + ':' + port2 + '/data')
-    .then((response) => response.text())
-    .then((data) => {
-      console.log('Data:', data)
-      window.localStorage.setItem('trackers', data)
-      return
-    })
+  const response = await fetch('http://' + ip2 + ':' + port2 + '/data')
+  const data = await response.text()
+  console.log('Data:', data)
+  window.localStorage.setItem('trackers', data)
 }
 
 function get_trackers() {
@@ -38,6 +36,51 @@ function get_trackers() {
   return JSON.parse(tracker)
 }
 
+async function update_list() {
+  // Refresh values
+  await refresh_values()
+
+  // Get template and list to put it in
+  const template = document.getElementById('tracker-template')
+  const list = document.getElementById('left')
+
+  // Remove all children
+  while (list.firstChild) {
+    list.removeChild(list.firstChild)
+  }
+
+  // Get all preset fields
+  const name = document.getElementById('name')
+  const last_checked = document.getElementById('date-and-time')
+  const url = document.getElementById('url')
+  const path = document.getElementById('path')
+  const value = document.getElementById('value')
+
+  // Loop though data from server
+  const trackers = get_trackers()
+  for (const key in trackers) {
+
+    // Create a visible clone and set it's id
+    const item = template.cloneNode(true)
+    item.classList.remove('hidden')
+    item.id = key
+
+    item.onclick = () => {
+      // Set values of preset field on click
+      name.value = trackers[key]["name"]
+      last_checked.value = new Date(trackers[key]['checked']).toISOString().substring(0, 16)
+      url.value = trackers[key]['url']
+      path.value = trackers[key]['path']
+      value.value = trackers[key]['value']
+              
+      // Set current tracker
+      current_tracker = key
+    }
+
+    // Add item to list
+    list.appendChild(item)
+  }
+}
 
 function data_exists(data) {
     return data !== "" && data !== null
@@ -56,7 +99,7 @@ function save_button() {
       method: 'POST',
       body: JSON.stringify(trackers[current_tracker])
     })
-    .then(()=> {refresh_values()})
+    .then(()=> update_list())
   }
 }
 
@@ -68,52 +111,57 @@ function delete_button() {
     fetch('http://' + ip + ':' + port + '/data/' + current_tracker, {
       method: 'DELETE',
     })
-    .then(() => {refresh_values()})
+    .then(() => update_list())
   }
 }
 
-refresh_values()
+update_list()
 .then(() => {
   document.getElementById('save').onclick = save_button
   document.getElementById('delete').onclick = delete_button
-
-  // Get template and list to put it in
-  const template = document.getElementById('tracker-template')
-  const list = document.getElementById('left')
-
-  // Get all preset fields
-  const name = document.getElementById('name')
-  const last_checked = document.getElementById('date-and-time')
-  const url = document.getElementById('url')
-  const path = document.getElementById('path')
-  const value = document.getElementById('value')
-  
-  console.log(get_trackers())
-  // Loop though data from server
-  const trackers = get_trackers()
-  for (const key in trackers) {
-
-    // Create a visible clone and set it's id
-    const item = template.cloneNode(true)
-    item.classList.remove('hidden')
-    item.id = key
-
-    item.onclick = () => {
-      // Set values of preset field on click
-      name.value = trackers[key]["name"]
-      last_checked.value = new Date(trackers[key]['checked']).toISOString().substring(0, 16)
-      url.value = trackers[key]['url']
-      path.value = trackers[key]['path']
-      value.value = trackers[key]['value']
-                
-      // Set current tracker
-      current_tracker = key
-    }
-
-    // Add item to list
-    list.appendChild(item)
-  }
+  console.log(1)
 })
+  
+// document.getElementById('save').onclick = save_button
+// document.getElementById('delete').onclick = delete_button
+// update_list()
+// console.log(2)
+  
+// // Get template and list to put it in
+// const template = document.getElementById('tracker-template')
+// const list = document.getElementById('left')
+
+// // Get all preset fields
+// const name = document.getElementById('name')
+// const last_checked = document.getElementById('date-and-time')
+// const url = document.getElementById('url')
+// const path = document.getElementById('path')
+// const value = document.getElementById('value')
+
+// // Loop though data from server
+// const trackers = get_trackers()
+// for (const key in trackers) {
+
+//   // Create a visible clone and set it's id
+//   const item = template.cloneNode(true)
+//   item.classList.remove('hidden')
+//   item.id = key
+
+//   item.onclick = () => {
+//     // Set values of preset field on click
+//     name.value = trackers[key]["name"]
+//     last_checked.value = new Date(trackers[key]['checked']).toISOString().substring(0, 16)
+//     url.value = trackers[key]['url']
+//     path.value = trackers[key]['path']
+//     value.value = trackers[key]['value']
+              
+//     // Set current tracker
+//     current_tracker = key
+//   }
+
+//   // Add item to list
+//   list.appendChild(item)
+// }
 
 // // Only run code if 'ip' and 'port' exists
 // if (data_exists(ip) && data_exists(port)){
